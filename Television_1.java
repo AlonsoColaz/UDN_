@@ -1,4 +1,4 @@
-package FinalProject;
+package ProyectoFinal;
 public class Television extends Electrodomestico {
     //Sus atributos son resolución (en pulgadas) y sintonizador TDT (booleano), ademas de los atributos heredados.
     private short resolucion;
