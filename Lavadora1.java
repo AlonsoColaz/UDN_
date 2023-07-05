@@ -1,4 +1,4 @@
-package FinalProject;
+package ProyectoFinal;
 public class Lavadora extends Electrodomestico {
     private int carga; //Su atributo es carga, ademas de los atributos heredados
     private final int carga_por_defecto = 5; // Por defecto, la carga es de 5 kg. Usa una constante para ello.
