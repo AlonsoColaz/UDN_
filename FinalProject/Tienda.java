@@ -2,22 +2,32 @@ package FinalProject;
 // Ahora crea una clase ejecutable que realice lo siguiente:
 public class Tienda {
     public static void main(String[] args) {
-    //• Crea un array de Electrodomesticos de 10 posiciones.
-    String[] Nombres = {"TV_LG","TV_Samsung","TV_Sony","TV_TVC","TV_Panasonic","Lavadora_LG","Lavadora_Samsung","Lavadora_Mabe","Lavadora_Wabe","Lavadora_Sabe"};
+        //• Crea un array de Electrodomesticos de 10 posiciones.
+        Electrodomestico[] electrodomesticos = new Electrodomestico[10];
+        Electrodomestico[] lavadoras = new Electrodomestico[10];
+        Electrodomestico[] televisiones = new Electrodomestico[10];
 
-    Electrodomestico tv = new Television(100,"blanco","A",20,50,true);
-    Electrodomestico tv1 = new Television(100,"negro","B",45,50,false);
-    Electrodomestico tv2 = new Television(100,"rojo","C",65,50,true);
-    Electrodomestico tv3 = new Television(100,"azul","D",75,50,false);
-    Electrodomestico tv4 = new Television(100,"gris","E",85,50,true);
-    Electrodomestico tv5 = new Television(100,"","F",35,50,false);
-    Electrodomestico tv6 = new Television(100,"gris","",25,50,true);
-    Electrodomestico tv7 = new Television(100,"rojo","D",15,50,false);
-    Electrodomestico tv8 = new Television(100,"negro","C",30,50,true);
-    Electrodomestico tv9 = new Television(100,"azul","B",35,50,false);
+        //• Asigna a cada posición un objeto de las clases anteriores con los valores que desees.
+        electrodomesticos[0] = new Lavadora(500,50,"blanco",'A',30);
+        electrodomesticos[1] = new Television(500.0,"azul", 'B', (double) 20.0,true, (short) 50);
+        electrodomesticos[2] = new Electrodomestico(500, "rojo", 'C', 50);
+        electrodomesticos[3] = new Lavadora(400,40,"gris",'D',30);
+        electrodomesticos[4] = new Television(400.0,"negro", 'E', (double) 20.0,false, (short) 35);
+        electrodomesticos[5] = new Electrodomestico(400, "azul", 'F', 50);
+        electrodomesticos[6] = new Lavadora(300,30,"gris",'A',30);
+        electrodomesticos[7] = new Television(300.0,"negro", 'B', (double) 20.0,true, (short) 60);
+        electrodomesticos[8] = new Electrodomestico(300, "rojo", 'C', 50);
+        electrodomesticos[9] = new Lavadora(600,45,"blanco",'D',30);
 
-    tv.precioFinal();
+        //• Ahora, recorre este array y ejecuta el método precioFinal().
 
+        double total = 0;
+        for (Electrodomestico electrodomestico : electrodomesticos){
+            System.out.println( electrodomestico);
+            System.out.println( electrodomestico.precioFinal());
+        }
+        //• Deberás mostrar el precio de cada clase, es decir, el precio de todas las televisiones por un lado, el de las lavadoras por otro y
+
+        // la suma de los Electrodomesticos (puedes crear objetos Electrodomestico, pero recuerda que Television y Lavadora también son electrodomésticos).
     }
-
 }
