@@ -1,22 +1,18 @@
 package ProyectoFinal;
 
 public class Electrodomestico {
+    private final double PRECIO_BASE = 100;
+    private final String COLOR_DEFECTO = "blanco";
+    private final char CONSUMO_ENERGETICO_DEFECTO = 'F';
+    private final double PESO_DEFECTO = 5;
 
-	// VARIABLES //
-	private double precioBase;
+    protected double precioBase;
     private String color;
     private char consumoEnergetico;
     private double peso;
 
-    // CONSTANTES //
-    private static final String COLOR_DEFECTO = "blanco";
-    private static final char CONSUMO_ENERGETICO_DEFECTO = 'F';
-    private static final double PRECIO_BASE_DEFECTO = 100.0;
-    private static final double PESO_DEFECTO = 5.0;
-
-    // CONSTRUCTORES //
     public Electrodomestico() {
-        this.precioBase = PRECIO_BASE_DEFECTO;
+        this.precioBase = PRECIO_BASE;
         this.color = COLOR_DEFECTO;
         this.consumoEnergetico = CONSUMO_ENERGETICO_DEFECTO;
         this.peso = PESO_DEFECTO;
@@ -24,9 +20,9 @@ public class Electrodomestico {
 
     public Electrodomestico(double precioBase, double peso) {
         this.precioBase = precioBase;
-        this.peso = peso;
         this.color = COLOR_DEFECTO;
         this.consumoEnergetico = CONSUMO_ENERGETICO_DEFECTO;
+        this.peso = peso;
     }
 
     public Electrodomestico(double precioBase, String color, char consumoEnergetico, double peso) {
@@ -36,7 +32,6 @@ public class Electrodomestico {
         this.peso = peso;
     }
 
-    // METODOS GETTERS //
     public double getPrecioBase() {
         return precioBase;
     }
@@ -53,30 +48,25 @@ public class Electrodomestico {
         return peso;
     }
 
-    // METODOS PRIVADOS PARA COMPROBAR EL CONSUMO Y EL COLOR //
     private char comprobarConsumoEnergetico(char letra) {
-        if (letra >= 'A' && letra <= 'F') {
-            return letra;
-        } else {
-            return CONSUMO_ENERGETICO_DEFECTO;
+        char[] letrasValidas = {'A', 'B', 'C', 'D', 'E', 'F'};
+        for (char letraValida : letrasValidas) {
+            if (Character.toUpperCase(letra) == letraValida) {
+                return Character.toUpperCase(letra);
+            }
         }
+        return CONSUMO_ENERGETICO_DEFECTO;
     }
 
     private String comprobarColor(String color) {
-        String colorLowerCase = color.toLowerCase();
-        switch (colorLowerCase) {
-            case "blanco":
-            case "negro":
-            case "rojo":
-            case "azul":
-            case "gris":
-                return colorLowerCase;
-            default:
-                return COLOR_DEFECTO;
+        String[] coloresValidos = {"blanco", "negro", "rojo", "azul", "gris"};
+        for (String colorValido : coloresValidos) {
+            if (color.toLowerCase().equals(colorValido)) {
+                return color.toLowerCase();
+            }
         }
+        return COLOR_DEFECTO;
     }
-
-    // METODO DEL PRECIO FINAL //
     public double precioFinal() {
         double precioFinal = precioBase;
 
@@ -101,17 +91,16 @@ public class Electrodomestico {
                 break;
         }
 
-        if (peso >= 0 && peso < 20) {
+        if (peso >= 0 && peso <= 19) {
             precioFinal += 10;
-        } else if (peso >= 20 && peso < 50) {
+        } else if (peso >= 20 && peso <= 49) {
             precioFinal += 50;
-        } else if (peso >= 50 && peso < 80) {
+        } else if (peso >= 50 && peso <= 79) {
             precioFinal += 80;
-        } else if (peso >= 80) {
+        } else if (peso > 80) {
             precioFinal += 100;
         }
 
         return precioFinal;
     }
-    
 }
