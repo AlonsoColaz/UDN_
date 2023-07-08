@@ -1,52 +1,113 @@
 package FinalProject_v3;
+public class Television extends Electrodomestico {
+    //Sus atributos son resolución (en pulgadas) y sintonizador TDT (booleano), ademas de los atributos heredados.
+    private short resolucion;
+    private boolean sintonizadorTDT;
+    double PrecioTotal = getPrecioBase();
 
-import java.text.NumberFormat;
-import java.util.Currency;
-import java.util.Locale;
+    //Por defecto, la resolucion sera de 20 pulgadas y el sintonizador sera false.
+    private static final boolean sintonizadorTDT_por_defecto = false;
+    private static final short resolucion_por_defecto = 20;
 
-// Ahora crea una clase ejecutable que realice lo siguiente:
-public class Tienda {
-    public static void main(String[] args) {
-        // Creando formato de pesos
-        Locale mex = new Locale("en", "US");
-        Currency pesos = Currency.getInstance(mex);
-        NumberFormat formatoPeso = NumberFormat.getCurrencyInstance(mex);
-
-        //• Crea un array de Electrodomesticos de 10 posiciones.
-        Electrodomestico[] electrodomesticos = new Electrodomestico[10];
-
-        //• Asigna a cada posición un objeto de las clases anteriores con los valores que desees.
-        electrodomesticos[0] = new Lavadora(500,50,"blanco",'A',30);
-        electrodomesticos[1] = new Television(500.0,"azul", 'B', (double) 20.0,true, (short) 50);
-        electrodomesticos[2] = new Television(500.0,"azul", 'B', (double) 20.0,true, (short) 50);
-        electrodomesticos[3] = new Lavadora(400,40,"gris",'D',30);
-        electrodomesticos[4] = new Television(400.0,"negro", 'E', (double) 20.0,false, (short) 35);
-        electrodomesticos[5] = new Lavadora(400,40,"gris",'D',30);
-        electrodomesticos[6] = new Lavadora(300,30,"gris",'A',30);
-        electrodomesticos[7] = new Television(600.0, "azul",'C', (double) 65);
-        electrodomesticos[8] = new Lavadora(400,40,"gris",'D',30);
-        electrodomesticos[9] = new Lavadora(300,45,30);
-
-        //• Ahora, recorre este array y ejecuta el método precioFinal().
-        double total_Electrodomesticos = 0;
-        double total_Televisores = 0;
-        double total_Lavadoras = 0;
-
-        for (Electrodomestico electrodomestico : electrodomesticos) {
-            if (electrodomestico instanceof Television) {
-                total_Televisores += electrodomestico.precioFinal();
-            } else if (electrodomestico instanceof Lavadora) {
-                total_Lavadoras += electrodomestico.precioFinal();
+    // Un constructor por defecto
+    public Television(double precioBase, String color, char consumoEnergetico, double peso) {
+            super(precioBase, color,consumoEnergetico,peso);
+            this.sintonizadorTDT = sintonizadorTDT_por_defecto;
+            this.resolucion = resolucion_por_defecto;
             }
-            total_Electrodomesticos += electrodomestico.precioFinal();
+    //Un constructor con el precio y peso. El resto por defecto.
+    public Television(double precioBase, double peso){
+            super(precioBase, peso);
+            this.sintonizadorTDT = sintonizadorTDT_por_defecto;
+            this.resolucion = resolucion_por_defecto;
+            }
+    // Un constructor con la resolución, sintonizador TDT y el resto de atributos heredados. Recuerda que debes llamar al constructor de la clase padre.
+    public Television(double precioBase,String color,char consumoEnergetico ,double peso, boolean sintonizadorTDT, short resolucion){
+            super(precioBase, color,consumoEnergetico,peso);
+            this.sintonizadorTDT = sintonizadorTDT;
+            this.resolucion = resolucion;
+            }
+    // Método get de resolución y sintonizador TDT.
+    public short getresolucion() { return resolucion; }
+    public boolean getsintonizadorTDT() { return sintonizadorTDT; }
+
+    @Override
+    public void comprobarConsumoEnergetico() {
+        switch (getConsumoEnergetico()) {
+            case 'A': PrecioTotal += 100 ;break;
+            case 'B':PrecioTotal += 80   ;break;
+            case 'C':PrecioTotal += 60   ;break;
+            case 'D':PrecioTotal += 50   ;break;
+            case 'E':PrecioTotal += 30   ;break;
+            case 'F':PrecioTotal += 10   ;break;
         }
-        System.out.println("El precio total de Televisiones es de " + formatoPeso.format(total_Televisores));
-        System.out.println("El precio total de Lavadoras es de " + formatoPeso.format(total_Lavadoras));
-        System.out.println("El precio total de electrodomesticos es de " + formatoPeso.format(total_Electrodomesticos));
-
-
-        //• Deberás mostrar el precio de cada clase, es decir, el precio de todas las televisiones por un lado, el de las lavadoras por otro y
-
-        // la suma de los Electrodomesticos (puedes crear objetos Electrodomestico, pero recuerda que Television y Lavadora también son electrodomésticos).
+    }
+    @Override
+    public void comprobarColor() {
+        String colorLowerCase = getColor().toLowerCase();
+        switch (colorLowerCase) {
+            case "negro": setColor("Negro");
+            case "rojo": setColor("Rojo");
+            case "azul": setColor("Azul");
+            case "gris": setColor("Gris");
+            default: setColor("Blanco");
+        }
+    }
+    @Override
+    public double precioFinal() {
+        if (sintonizadorTDT == true){
+            PrecioTotal += 50;
+        }
+        if (resolucion > 40) {
+            PrecioTotal += (int) (PrecioTotal * (30.0f / 100.0f));
+        }
+        if (getPeso() > 80) {
+            PrecioTotal += 100;
+        } else if (getPeso() > 50) {
+            PrecioTotal += 80;
+        } else if (getPeso() > 20) {
+            PrecioTotal += 50;
+        } else {
+            PrecioTotal += 10;
+        }
+        return PrecioTotal;
     }
 }
+
+/*
+{
+
+double precioFinal = precioBase;
+
+
+
+                }
+                return precioFinal;
+                }
+
+                ********Color
+                {
+        String colorLowerCase = color.toLowerCase();
+        switch (colorLowerCase) {
+            case "blanco":
+            case "negro":
+            case "rojo":
+            case "azul":
+            case "gris":
+                return colorLowerCase;
+            default: return color_por_defecto;
+        }
+    }
+                *********** Letra
+                 {
+            switch (letra) {
+                case 'A' :
+                case 'B' :
+                case 'C' :
+                case 'D' :
+                case 'E' :
+                case 'F' : return letra;
+                default:
+                    return letra = 'F';
+            }
+        }
