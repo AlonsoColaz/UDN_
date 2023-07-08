@@ -1,52 +1,76 @@
-package FinalProject_v3;
+package FinalProject;
+public class Television extends Electrodomestico{ //Sus atributos son resolución (en pulgadas) y sintonizador TDT (booleano), ademas de los atributos heredados.
+    private int resolucion; // Por defecto, la resolución sera de 20 pulgadas y el sintonizador sera false.
+    private boolean sintonizadorTDT;
+    private final int resolucion_por_defecto = 20; // Por defecto, la resolución sera de 20 pulgadas y el sintonizador sera false.
+    private final boolean sintonizadorTDT_por_defecto = false;
 
-import java.text.NumberFormat;
-import java.util.Currency;
-import java.util.Locale;
-
-// Ahora crea una clase ejecutable que realice lo siguiente:
-public class Tienda {
-    public static void main(String[] args) {
-        // Creando formato de pesos
-        Locale mex = new Locale("en", "US");
-        Currency pesos = Currency.getInstance(mex);
-        NumberFormat formatoPeso = NumberFormat.getCurrencyInstance(mex);
-
-        //• Crea un array de Electrodomesticos de 10 posiciones.
-        Electrodomestico[] electrodomesticos = new Electrodomestico[10];
-
-        //• Asigna a cada posición un objeto de las clases anteriores con los valores que desees.
-        electrodomesticos[0] = new Lavadora(500,50,"blanco",'A',30);
-        electrodomesticos[1] = new Television(500.0,"azul", 'B', (double) 20.0,true, (short) 50);
-        electrodomesticos[2] = new Television(500.0,"azul", 'B', (double) 20.0,true, (short) 50);
-        electrodomesticos[3] = new Lavadora(400,40,"gris",'D',30);
-        electrodomesticos[4] = new Television(400.0,"negro", 'E', (double) 20.0,false, (short) 35);
-        electrodomesticos[5] = new Lavadora(400,40,"gris",'D',30);
-        electrodomesticos[6] = new Lavadora(300,30,"gris",'A',30);
-        electrodomesticos[7] = new Television(600.0, "azul",'C', (double) 65);
-        electrodomesticos[8] = new Lavadora(400,40,"gris",'D',30);
-        electrodomesticos[9] = new Lavadora(300,45,30);
-
-        //• Ahora, recorre este array y ejecuta el método precioFinal().
-        double total_Electrodomesticos = 0;
-        double total_Televisores = 0;
-        double total_Lavadoras = 0;
-
-        for (Electrodomestico electrodomestico : electrodomesticos) {
-            if (electrodomestico instanceof Television) {
-                total_Televisores += electrodomestico.precioFinal();
-            } else if (electrodomestico instanceof Lavadora) {
-                total_Lavadoras += electrodomestico.precioFinal();
-            }
-            total_Electrodomesticos += electrodomestico.precioFinal();
-        }
-        System.out.println("El precio total de Televisiones es de " + formatoPeso.format(total_Televisores));
-        System.out.println("El precio total de Lavadoras es de " + formatoPeso.format(total_Lavadoras));
-        System.out.println("El precio total de electrodomesticos es de " + formatoPeso.format(total_Electrodomesticos));
-
-
-        //• Deberás mostrar el precio de cada clase, es decir, el precio de todas las televisiones por un lado, el de las lavadoras por otro y
-
-        // la suma de los Electrodomesticos (puedes crear objetos Electrodomestico, pero recuerda que Television y Lavadora también son electrodomésticos).
+    public Television(double precioBase, int peso, int resolucion, boolean sintonizadorTDT) { // Un constructor por defecto.
+        super(precioBase, peso);
+        this.resolucion = resolucion_por_defecto;
+        this.sintonizadorTDT = sintonizadorTDT_por_defecto;
     }
+
+    //Un constructor con la resolución, sintonizador TDT y el resto de atributos heredados. Recuerda que debes llamar al constructor de la clase padre.
+    public Television(int precioBase, String color, String consumoEnergético, int peso, int resolucion, boolean sintonizadorTDT) {
+        super(precioBase, color, consumoEnergético, peso);
+        this.resolucion = resolucion;
+        this.sintonizadorTDT = sintonizadorTDT;
+    }
+    // Método get de resolución y sintonizador TDT.
+    public boolean isSintonizadorTDT() { return sintonizadorTDT;}
+    public int getResolucion() { return resolucion; }
+    @Override
+    public void comprobarConsumoEnergetico(String letra) {
+        switch (letra) {
+            case "A" : System.out.println(100); setConsumoEnergético("100"); break;
+            case "B" : System.out.println(80); setConsumoEnergético("80"); break;
+            case "C" : System.out.println(60); setConsumoEnergético("60"); break;
+            case "D" : System.out.println(50); setConsumoEnergético("50"); break;
+            case "E" : System.out.println(30); setConsumoEnergético("30"); break;
+            case "F" : System.out.println(10); setConsumoEnergético("10"); break;
+            default:
+                System.out.println("El precio base del electronico es de " + 100); setConsumoEnergético("100"); break;
+        }
+    }
+    @Override
+    public void comprobarColor(String color) {
+        color = color.toLowerCase();
+        switch (color) {
+            case "negro" : System.out.println("El Color del electronico es Negro"); break;
+            case "rojo" : System.out.println("El Color del electronico es Rojo"); break;
+            case "azul" : System.out.println("El Color del electronico es Azul"); break;
+            case "gris" : System.out.println("El Color del electronico es Gris"); break;
+            case "blanco" : System.out.println("El Color del electronico es Blanco"); break;
+            default:
+                System.out.println("El Color del electronico es " + getColor()); break;
+        }
+    }
+    @Override
+    public void precioFinal() {
+        // Recuerda que las condiciones que hemos visto en la clase Electrodomestico también deben afectar al precio.
+        int consumo = Integer.parseInt(getConsumoEnergético()), peso = getpeso();
+        if (getpeso() > 80) {
+            setPeso(100);
+        } else if (getpeso() > 50) {
+            setPeso(80);
+        } else if (getpeso() > 20) {
+            setPeso(50);
+        } else {
+            setPeso(10);
+        }
+        int sintonizador;
+        if (sintonizadorTDT = true){
+            sintonizador = 50; //si tiene un sintonizador TDT incorporado, aumentara 50
+        }else { sintonizador = 0;}
+
+        double base = getPrecioBase();
+        int porcentajeAgregado = 0;
+        if (resolucion > 40) {
+            porcentajeAgregado = (int)(getPrecioBase()*(30.0f/100.0f));//si tiene una resolución mayor de 40 pulgadas, se incrementara el precio un 30%
+        }
+        System.out.println("Precio final del electronico $" + (base + peso + consumo + porcentajeAgregado + sintonizador));
+
+    }
+
 }
