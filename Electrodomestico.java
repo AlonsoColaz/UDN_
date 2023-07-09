@@ -1,106 +1,38 @@
-package ProyectoFinal;
+package FinalProject_v3;
+public abstract class Electrodomestico {
+    //Sus atributos son precio base, color, consumo energético (letras entre A y F) y peso.
+    //Por defecto, el color sera blanco, el consumo energético sera F, el precioBase es de 100 € y el peso de 5 kg. Usa constantes para ello
+    private double precioBase = 100.0, peso = 5.0;
+    private String color = "blanco";
+    private char consumoEnergetico = 'F';
 
-public class Electrodomestico {
-    private final double PRECIO_BASE = 100;
-    private final String COLOR_DEFECTO = "blanco";
-    private final char CONSUMO_ENERGETICO_DEFECTO = 'F';
-    private final double PESO_DEFECTO = 5;
-
-    protected double precioBase;
-    private String color;
-    private char consumoEnergetico;
-    private double peso;
-
+    // constructor por defecto
     public Electrodomestico() {
-        this.precioBase = PRECIO_BASE;
-        this.color = COLOR_DEFECTO;
-        this.consumoEnergetico = CONSUMO_ENERGETICO_DEFECTO;
-        this.peso = PESO_DEFECTO;
     }
-
+    //constructor con el precio y peso. El resto por defecto.
     public Electrodomestico(double precioBase, double peso) {
         this.precioBase = precioBase;
-        this.color = COLOR_DEFECTO;
-        this.consumoEnergetico = CONSUMO_ENERGETICO_DEFECTO;
         this.peso = peso;
     }
-
+    // constructor con todos los atributos
     public Electrodomestico(double precioBase, String color, char consumoEnergetico, double peso) {
         this.precioBase = precioBase;
-        this.color = comprobarColor(color);
-        this.consumoEnergetico = comprobarConsumoEnergetico(consumoEnergetico);
+        this.color = color;
+        this.consumoEnergetico = consumoEnergetico;
         this.peso = peso;
     }
+    // //Indica que se podrán heredar.  // Métodos get de todos los atributos.
+    public double getPrecioBase() { return precioBase; }
+    public String getColor() { return color; }
+    public char getConsumoEnergetico() { return consumoEnergetico; }
+    public double getPeso() { return peso; }
 
-    public double getPrecioBase() {
-        return precioBase;
+    public void setColor(String color) {
+        this.color = color;
     }
 
-    public String getColor() {
-        return color;
-    }
+    public abstract double comprobarConsumoEnergetico();
+    public abstract void comprobarColor();
+    public abstract double precioFinal();
 
-    public char getConsumoEnergetico() {
-        return consumoEnergetico;
-    }
-
-    public double getPeso() {
-        return peso;
-    }
-
-    private char comprobarConsumoEnergetico(char letra) {
-        char[] letrasValidas = {'A', 'B', 'C', 'D', 'E', 'F'};
-        for (char letraValida : letrasValidas) {
-            if (Character.toUpperCase(letra) == letraValida) {
-                return Character.toUpperCase(letra);
-            }
-        }
-        return CONSUMO_ENERGETICO_DEFECTO;
-    }
-
-    private String comprobarColor(String color) {
-        String[] coloresValidos = {"blanco", "negro", "rojo", "azul", "gris"};
-        for (String colorValido : coloresValidos) {
-            if (color.toLowerCase().equals(colorValido)) {
-                return color.toLowerCase();
-            }
-        }
-        return COLOR_DEFECTO;
-    }
-    public double precioFinal() {
-        double precioFinal = precioBase;
-
-        switch (consumoEnergetico) {
-            case 'A':
-                precioFinal += 100;
-                break;
-            case 'B':
-                precioFinal += 80;
-                break;
-            case 'C':
-                precioFinal += 60;
-                break;
-            case 'D':
-                precioFinal += 50;
-                break;
-            case 'E':
-                precioFinal += 30;
-                break;
-            case 'F':
-                precioFinal += 10;
-                break;
-        }
-
-        if (peso >= 0 && peso <= 19) {
-            precioFinal += 10;
-        } else if (peso >= 20 && peso <= 49) {
-            precioFinal += 50;
-        } else if (peso >= 50 && peso <= 79) {
-            precioFinal += 80;
-        } else if (peso > 80) {
-            precioFinal += 100;
-        }
-
-        return precioFinal;
-    }
 }
